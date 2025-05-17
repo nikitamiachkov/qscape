@@ -2,6 +2,7 @@ package com.example.kaban2.Screens.SignUpScreen
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,8 +19,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.kaban2.Domain.State.ResultState
@@ -66,6 +70,7 @@ fun SignUpScreen(navController: NavHostController, sigUpViewModel: SignUpViewMod
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
+            .background(Color.Black)
     ) {
 
         TextFieldEmail(uiState.email,uiState.isEmailError) { sigUpViewModel.updateState(uiState.copy(email = it)) }
@@ -93,6 +98,7 @@ fun SignUpScreen(navController: NavHostController, sigUpViewModel: SignUpViewMod
 
         Text(
             text = mDate.value,
+            color = Color.White,
             modifier = Modifier.clickable {
                 mDatePickerDialog.show()
             }
@@ -118,5 +124,16 @@ fun SignUpScreen(navController: NavHostController, sigUpViewModel: SignUpViewMod
                 }
             }
         }
+
+        Text(
+            "Уже есть аккаунт",
+            fontSize = 14.sp,
+            color = Color.White,
+            fontWeight = FontWeight.W600,
+            modifier = Modifier.clickable {
+                navController.navigate(NavigationRoutes.SIGNIN)
+            }
+        )
+
     }
 }

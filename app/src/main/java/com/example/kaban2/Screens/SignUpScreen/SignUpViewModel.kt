@@ -58,11 +58,17 @@ class SignUpViewModel:ViewModel() {
                         password = _uiState.value.password
                     }
                     Log.d("SignUp", "Success")
-                    val user = Profile(_uiState.value.username,
+
+                    val user = Profile(
+                        user_id = supabase.auth.currentUserOrNull()?.id,
+                        _uiState.value.username,
                         _uiState.value.surname,
-                        _uiState.value.dateBirth, null)
+                        _uiState.value.dateBirth)
+
                     supabase.from("profile").insert(user)
                     _resultState.value = ResultState.Success("Success")
+
+
                 } catch (_ex: AuthRestException) {
                     Log.d("signUp", _ex.message.toString())
                     Log.d("signUp", _ex.errorCode.toString())

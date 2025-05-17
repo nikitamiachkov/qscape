@@ -37,9 +37,9 @@ fun SplashScreen(navController: NavHostController) {
     //Запускает асинхронный блок кода, который выполняется один раз при композиции
     LaunchedEffect(key1 = true) {
         scale.animateTo(
-            targetValue = 2f,
+            targetValue = 1f,
             animationSpec = tween(
-                durationMillis = 1500,
+                durationMillis = 2500,
                 easing = {
                     OvershootInterpolator(0.5f).getInterpolation(it)
                 })

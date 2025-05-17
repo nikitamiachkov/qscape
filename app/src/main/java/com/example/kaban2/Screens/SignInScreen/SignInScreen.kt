@@ -1,5 +1,6 @@
 package com.example.kaban2.Screens.SignInScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -48,6 +49,7 @@ fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewMo
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
+            .background(Color.Black)
     ) {
         //Вызовы TextFieldEmail и TextFieldPassword создают поля ввода для email и пароля, соответственно, используя ранее определенные функции
         TextFieldEmail(value = uiState.email, error = uiState.errorEmail,
@@ -91,7 +93,7 @@ fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewMo
         Text(
             "Создать аккаунт",
             fontSize = 14.sp,
-            color = Color.Black,
+            color = Color.White,
             fontWeight = FontWeight.W600,
             modifier = Modifier.clickable {
                 navController.navigate(NavigationRoutes.SIGNUP)
