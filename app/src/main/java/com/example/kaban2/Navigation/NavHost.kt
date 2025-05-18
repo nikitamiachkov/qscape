@@ -11,7 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.kaban2.Screens.BuyScreen.BuyScreen
 import com.example.kaban2.Screens.MainScreen.MainScreen
+import com.example.kaban2.Screens.RateScreen.RateScreen
 import com.example.kaban2.Screens.SignInScreen.SignInScreen
 import com.example.kaban2.Screens.SignUpScreen.SignUpScreen
 import com.example.kaban2.Screens.SplashScreen.SplashScreen
@@ -50,6 +52,14 @@ fun NavHost() {
                 composable(NavigationRoutes.MAIN)
                 {
                     MainScreen(navController)
+                }
+                composable(NavigationRoutes.RATE)
+                {
+                    RateScreen(navController)
+                }
+                composable(NavigationRoutes.BUY)
+                {
+                    BuyScreen(navController)
                 }
             }
         }

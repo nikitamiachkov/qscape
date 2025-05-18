@@ -64,6 +64,11 @@ dependencies {
     implementation(libs.auth.kt)
     implementation(libs.realtime.kt)
 
+    //сказали
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("com.google.android.material:material:1.11.0")
+
     //Ktor
     implementation(libs.ktor.client.android)
 
