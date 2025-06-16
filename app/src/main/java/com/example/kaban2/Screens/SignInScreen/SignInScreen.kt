@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -49,7 +50,7 @@ fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewMo
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
-            .background(Color.Black)
+            .background(Color("#0b81bc".toColorInt()))
     ) {
         //Вызовы TextFieldEmail и TextFieldPassword создают поля ввода для email и пароля, соответственно, используя ранее определенные функции
         TextFieldEmail(value = uiState.email, error = uiState.errorEmail,

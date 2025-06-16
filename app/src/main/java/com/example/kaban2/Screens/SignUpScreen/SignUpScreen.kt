@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.kaban2.Domain.State.ResultState
@@ -70,7 +71,7 @@ fun SignUpScreen(navController: NavHostController, sigUpViewModel: SignUpViewMod
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
-            .background(Color.Black)
+            .background(Color("#0b81bc".toColorInt()))
     ) {
 
         TextFieldEmail(uiState.email,uiState.isEmailError) { sigUpViewModel.updateState(uiState.copy(email = it)) }

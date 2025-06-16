@@ -12,7 +12,6 @@ import com.example.kaban2.Screens.Components.BottomNavItem
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 
-
 @Composable
 fun DarkBottomNavigationBar(navController: NavHostController) {
     val items = listOf(
@@ -21,9 +20,13 @@ fun DarkBottomNavigationBar(navController: NavHostController) {
         BottomNavItem.Rate
     )
 
+    // Цвета бренда
+    val primaryColor = Color(0xFF0B81BC)    // основной
+    val accentColor = Color(0xFF7884E3)     // второстепенный
+
     NavigationBar(
-        containerColor = Color.DarkGray, // фон навигации
-        contentColor = Color.White       // цвет текста и иконок
+        containerColor = primaryColor,
+        contentColor = Color.White
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -45,7 +48,7 @@ fun DarkBottomNavigationBar(navController: NavHostController) {
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color.White,
                     unselectedIconColor = Color.LightGray,
-                    indicatorColor = Color.Gray
+                    indicatorColor = accentColor
                 )
             )
         }
