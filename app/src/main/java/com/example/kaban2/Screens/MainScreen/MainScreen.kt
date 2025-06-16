@@ -1,31 +1,45 @@
 package com.example.kaban2.Screens.MainScreen
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.kaban2.R
 import com.example.kaban2.Screens.BuyScreen.BuyScreen
 import com.example.kaban2.Screens.Components.BottomNavItem
+import com.example.kaban2.Screens.Components.ProjectCard
 import com.example.kaban2.Screens.DarkBottomNavigationBar
+import com.example.kaban2.Screens.NavigationScreen
 import com.example.kaban2.Screens.RateScreen.RateScreen
 
+data class Project(
+    val title: String,
+    val progress: Float, // 0.0 to 1.0
+    val status: String
+)
 
 @Composable
 fun MainScreen(navController: NavHostController) {
     val innerNavController = rememberNavController()
 
     Scaffold(
-        containerColor = Color(0xFF121212), // Тёмный фон всего экрана
+        containerColor = Color(0xFF0B81BC),
         bottomBar = {
             DarkBottomNavigationBar(innerNavController)
         }
@@ -36,21 +50,73 @@ fun MainScreen(navController: NavHostController) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomNavItem.Main.route) {
-                Surface(color = Color(0xFF121212), modifier = Modifier.fillMaxSize()) {
-                    Text(
-                        text = "Главная страница",
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
+                ProjectsScreen()
             }
             composable(BottomNavItem.Buy.route) {
-                BuyScreen(innerNavController)
+                BuyScreen(navController)
+
             }
             composable(BottomNavItem.Rate.route) {
-                RateScreen(innerNavController)
+
+                RateScreen(navController)
             }
         }
     }
 }
+
+@Composable
+fun ProjectsScreen() {
+    val projects = listOf(
+        Project("Разработка сайта", 0.75f, "В процессе"),
+        Project("Приложение для заказов", 0.4f, "На согласовании"),
+        Project("CRM для клиента", 1.0f, "Завершён")
+    )
+
+    LazyColumn(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxSize()
+    ) {
+        item {
+            // Аватар и имя
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.icon),
+                    contentDescription = "Аватар",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Иван Иванов",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text(
+                text = "Активные проекты",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        items(projects.size) { index ->
+            ProjectCard(project = projects[index])
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+    }
+}
+
+
