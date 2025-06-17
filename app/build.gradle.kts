@@ -42,6 +42,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,6 +64,8 @@ dependencies {
     implementation(libs.postgrest.kt)
     implementation(libs.auth.kt)
     implementation(libs.realtime.kt)
+
+    implementation (libs.androidx.runtime.livedata)
 
     //сказали
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")

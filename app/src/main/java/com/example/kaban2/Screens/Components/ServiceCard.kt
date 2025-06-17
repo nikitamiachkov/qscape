@@ -17,10 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kaban2.Domain.models.Services
 import com.example.kaban2.Screens.BuyScreen.Service
 
 @Composable
-fun ServiceCard(service: Service) {
+fun ServiceCard(service: Services) {
     Card(
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF1E1E1E)),
@@ -28,7 +29,7 @@ fun ServiceCard(service: Service) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = service.title,
+                text = service.name,
                 color = Color.White,
                 style = MaterialTheme.typography.titleMedium
             )
@@ -44,12 +45,12 @@ fun ServiceCard(service: Service) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Срок: ${service.duration}",
+                    text = "Срок: ${service.term}",
                     color = Color(0xFF0B81BC),
                     fontSize = 14.sp
                 )
                 Text(
-                    text = "Цена: ${service.price}",
+                    text = "Цена: ${service.cost}",
                     color = Color(0xFF0B81BC),
                     fontSize = 14.sp,
                     fontWeight = androidx.compose.ui.text.font.FontWeight.Bold

@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -37,6 +38,10 @@ data class Project(
 @Composable
 fun MainScreen(navController: NavHostController) {
     val innerNavController = rememberNavController()
+    val viewModel: MainScreenViewModel = viewModel()
+
+    val username = viewModel.username
+
 
     Scaffold(
         containerColor = Color(0xFF0B81BC),
@@ -50,7 +55,7 @@ fun MainScreen(navController: NavHostController) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomNavItem.Main.route) {
-                ProjectsScreen()
+                ProjectsScreen(username)
             }
             composable(BottomNavItem.Buy.route) {
                 BuyScreen(navController)
@@ -65,12 +70,17 @@ fun MainScreen(navController: NavHostController) {
 }
 
 @Composable
-fun ProjectsScreen() {
+fun ProjectsScreen(username : String?) {
     val projects = listOf(
         Project("Разработка сайта", 0.75f, "В процессе"),
         Project("Приложение для заказов", 0.4f, "На согласовании"),
         Project("CRM для клиента", 1.0f, "Завершён")
     )
+
+    val viewModel: MainScreenViewModel = viewModel()
+    val books = viewModel.books
+    val serv = viewModel.books2
+    val kolvo = viewModel.kolvo
 
     LazyColumn(
         modifier = Modifier
@@ -94,7 +104,7 @@ fun ProjectsScreen() {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Иван Иванов",
+                    text = username.toString(),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
@@ -112,8 +122,9 @@ fun ProjectsScreen() {
             Spacer(modifier = Modifier.height(12.dp))
         }
 
-        items(projects.size) { index ->
-            ProjectCard(project = projects[index])
+        items(kolvo) { index ->
+            ProjectCard(books.value?.get(index),
+                books.value?.get(index)?.let { serv.value?.get(it.service_id) }) //books.value?[index].service_id
             Spacer(modifier = Modifier.height(12.dp))
         }
     }
