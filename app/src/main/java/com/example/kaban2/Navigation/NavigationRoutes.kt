@@ -7,5 +7,6 @@ object NavigationRoutes {
     const val MAIN ="main"
     const val RATE ="rate"
     const val BUY ="buy"
+    const val ADMAIN = "admian"
 
 }

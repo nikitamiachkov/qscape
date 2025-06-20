@@ -82,12 +82,26 @@ fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewMo
             }
 
             is ResultState.Success -> {
-                navController.navigate(NavigationRoutes.MAIN)
-                {
-                    popUpTo(NavigationRoutes.SIGNIN) {
-                        inclusive = true
+
+                if (uiState.email == "admin@gmail.com") {
+                    navController.navigate(NavigationRoutes.ADMAIN)
+                    {
+                        popUpTo(NavigationRoutes.SIGNIN) {
+                            inclusive = true
+                        }
                     }
+                } else {
+
+                    navController.navigate(NavigationRoutes.MAIN)
+                    {
+                        popUpTo(NavigationRoutes.SIGNIN) {
+                            inclusive = true
+                        }
+                    }
+
                 }
+
+
             }
         }
 

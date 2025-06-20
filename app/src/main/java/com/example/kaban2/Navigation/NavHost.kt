@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.kaban2.Screens.Admin.AdMainScreen.AdMainScreen
+import com.example.kaban2.Screens.Admin.AdRateScreen.AdRateScreen
 import com.example.kaban2.Screens.BuyScreen.BuyScreen
 import com.example.kaban2.Screens.MainScreen.MainScreen
 import com.example.kaban2.Screens.RateScreen.RateScreen
@@ -60,6 +62,16 @@ fun NavHost() {
                 composable(NavigationRoutes.BUY)
                 {
                     BuyScreen(navController)
+                }
+                composable(NavigationRoutes.ADMAIN)
+                {
+                    AdMainScreen(navController)
+                }
+                composable("chat_screen/{userId}") { backStackEntry ->
+                    val userId = backStackEntry.arguments?.getString("userId")
+                    if (userId != null) {
+                        AdRateScreen(userId = userId, navController = navController)
+                    }
                 }
             }
         }
