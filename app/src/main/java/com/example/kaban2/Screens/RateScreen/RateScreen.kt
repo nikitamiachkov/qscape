@@ -23,19 +23,36 @@ import androidx.compose.ui.unit.sp
 import com.example.kaban2.R
 
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.kaban2.Domain.models.Chat
 import com.example.kaban2.Screens.Components.MessageBubble
+import com.example.kaban2.Screens.Components.ServiceCard
+import com.example.kaban2.Screens.MainScreen.MainScreenViewModel
 
 data class Message(val text: String, val isUser: Boolean)
 
 @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun RateScreen(navController: androidx.navigation.NavHostController) {
-    var messages by remember { mutableStateOf(
+    var messages1 by remember { mutableStateOf(
         listOf(
-            Message("Здравствуйте! Чем можем помочь?", false),
-            Message("Привет! У меня вопрос по заказу.", true)
+            Chat("", false, "Здравствуйте! Чем можем помочь?"),
+            //Message("Привет! У меня вопрос по заказу.", true)
         )
     ) }
+
+    var messages by remember { mutableStateOf(
+        listOf(
+            Chat("", false, null),
+            //Message("Привет! У меня вопрос по заказу.", true)
+        )
+    ) }
+
+    val viewModel: RateScreenViewModel = viewModel()
+
+    val chat = viewModel.books.observeAsState(emptyList())
+    val kolvo = viewModel.kolvo
 
     var inputText by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -79,8 +96,15 @@ fun RateScreen(navController: androidx.navigation.NavHostController) {
                     .padding(horizontal = 12.dp, vertical = 8.dp),
                 reverseLayout = false
             ) {
+                items(1) { message ->
+                    MessageBubble(messages1[0])
+                }
+                //MessageBubble(messages[0])
+                items(kolvo) { index ->
+                    MessageBubble(chat.value[index])
+                }
                 items(messages) { message ->
-                    MessageBubble(message)
+                    if (message.message != null) MessageBubble(message)
                 }
             }
 
@@ -110,7 +134,8 @@ fun RateScreen(navController: androidx.navigation.NavHostController) {
                     onClick = {
                         val text = inputText.text.trim()
                         if (text.isNotEmpty()) {
-                            messages = messages + Message(text, true)
+                            viewModel.insertUserData(text)
+                            messages = messages + Chat("", true, text)
                             inputText = TextFieldValue("")
                             // Здесь можно добавить отправку сообщения на сервер, если нужно
                         }

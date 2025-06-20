@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class Chat (
 
     val user_id:String?,
-    val from: Int,
+    val from: Boolean,
     val message:String?,
 
 )

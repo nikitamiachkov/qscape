@@ -15,13 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kaban2.Domain.models.Chat
 import com.example.kaban2.Screens.RateScreen.Message
 
 @Composable
-fun MessageBubble(message: Message) {
-    val backgroundColor = if (message.isUser) Color(0xFF0B81BC) else Color(0xFF2A2A2A)
-    val alignment = if (message.isUser) Alignment.End else Alignment.Start
-    val shape = if (message.isUser) {
+fun MessageBubble(message: Chat) {
+    val backgroundColor = if (message.from) Color(0xFF0B81BC) else Color(0xFF2A2A2A)
+    val alignment = if (message.from) Alignment.End else Alignment.Start
+    val shape = if (message.from) {
         RoundedCornerShape(16.dp, 0.dp, 16.dp, 16.dp)
     } else {
         RoundedCornerShape(0.dp, 16.dp, 16.dp, 16.dp)
@@ -30,7 +31,7 @@ fun MessageBubble(message: Message) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalArrangement = if (message.isUser) Arrangement.End else Arrangement.Start
+        horizontalArrangement = if (message.from) Arrangement.End else Arrangement.Start
     ) {
         Box(
             modifier = Modifier
@@ -39,7 +40,7 @@ fun MessageBubble(message: Message) {
                 .widthIn(max = 250.dp)
         ) {
             Text(
-                text = message.text,
+                text = message.message.toString(),
                 color = Color.White,
                 fontSize = 16.sp
             )
