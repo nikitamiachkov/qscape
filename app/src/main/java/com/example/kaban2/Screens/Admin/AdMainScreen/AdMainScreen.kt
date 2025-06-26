@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -49,7 +51,6 @@ fun AdMainScreen(navController: NavHostController) {
 
     val username = viewModel.username
 
-
     Scaffold(
         containerColor = Color(0xFF0B81BC),
         bottomBar = {
@@ -62,7 +63,8 @@ fun AdMainScreen(navController: NavHostController) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(AdBottomNavItem.Main.route) {
-                AdProjectsScreen(username)
+
+                AdProjectsScreen(username, navController)
             }
             composable(AdBottomNavItem.Buy.route) {
                 AdBuyScreen(navController)
@@ -76,12 +78,14 @@ fun AdMainScreen(navController: NavHostController) {
 }
 
 @Composable
-fun AdProjectsScreen(username : String?) {
+fun AdProjectsScreen(username : String?, navController: NavController) {
     val projects = listOf(
         Project("Разработка сайта", 0.75f, "В процессе"),
         Project("Приложение для заказов", 0.4f, "На согласовании"),
         Project("CRM для клиента", 1.0f, "Завершён")
     )
+
+
 
     val viewModel: AdMainScreenViewModel = viewModel()
     val books = viewModel.books
@@ -138,7 +142,8 @@ fun AdProjectsScreen(username : String?) {
                     profile = prof.value?.get(i)
                     AdProjectCard(profile,
                         books.value?.get(index),
-                        books.value?.get(index)?.let { serv.value?.get(it.service_id) }) //books.value?[index].service_id
+                        books.value?.get(index)?.let { serv.value?.get(it.service_id) },
+                        navController) //books.value?[index].service_id
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }

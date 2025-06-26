@@ -81,4 +81,48 @@ dependencies {
 
     //ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    //ТЕСТЫ
+    testImplementation("app.cash.turbine:turbine:1.0.0")
+    testImplementation("io.mockk:mockk:1.13.5")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation(kotlin("test"))
+
+
+    // To use the androidx.test.core APIs
+    androidTestImplementation("androidx.test:core:1.6.1")
+    // Kotlin extensions for androidx.test.core
+    androidTestImplementation("androidx.test:core-ktx:1.6.1")
+
+    // To use the androidx.test.espresso
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+
+    // To use the JUnit Extension APIs
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    // Kotlin extensions for androidx.test.ext.junit
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.2.1")
+
+    // To use the Truth Extension APIs
+    androidTestImplementation("androidx.test.ext:truth:1.6.0")
+
+    // To use the androidx.test.runner APIs
+    androidTestImplementation("androidx.test:runner:1.6.2")
+
+    // To use android test orchestrator
+    androidTestUtil("androidx.test:orchestrator:1.5.1")
+
+    testImplementation("org.slf4j:slf4j-simple:2.0.7")
+
+    // Для тестирования LiveData
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
+
+    // Или если используете AndroidX Test
+    androidTestImplementation ("androidx.arch.core:core-testing:2.2.0")
+
+
+
+    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+
+    androidTestImplementation("androidx.test:rules:1.5.0")
 }

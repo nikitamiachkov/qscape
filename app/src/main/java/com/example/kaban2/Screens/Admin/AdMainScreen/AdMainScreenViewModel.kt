@@ -15,6 +15,7 @@ import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
 
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 
 import com.example.kaban2.Domain.models.Profile
 import com.example.kaban2.Domain.models.Projects
@@ -49,6 +50,9 @@ class AdMainScreenViewModel : ViewModel() {
     val books3: LiveData<List<Profile>> get() = _books3
 
     private var allBooks3: List<Profile> = listOf()
+
+    private val _projects = MutableStateFlow<Float>(0.0f)
+    val projects: StateFlow<Float> = _projects
 
 
 
@@ -126,6 +130,40 @@ class AdMainScreenViewModel : ViewModel() {
 
         }
 
+    }
+
+    fun updateProjectProgress(user_id: String?, service_id: Int?, newProgress: Float, navController: NavController) {
+        if (user_id == null) return
+        viewModelScope.launch {
+
+
+            supabase.from("projects").update(
+                {
+                    set("completeness", newProgress)
+                }
+            ) {
+                filter {
+                    eq("user_id", user_id)
+                    service_id?.let { eq("service_id", it) }
+                }
+            }
+
+            val profileResult = supabase.from("projects")
+                .select() {
+                    filter {
+                        eq("user_id", user_id)
+                        service_id?.let { eq("service_id", it) }
+                    }
+                }
+                .decodeSingle<Projects>()
+
+
+            _projects.value = newProgress
+
+            /*navController.popBackStack()
+            navController.navigate("admian")*/
+
+        }
     }
 
 }
