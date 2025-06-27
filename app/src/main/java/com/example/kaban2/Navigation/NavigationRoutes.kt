@@ -8,5 +8,5 @@ object NavigationRoutes {
     const val RATE ="rate"
     const val BUY ="buy"
     const val ADMAIN = "admian"
-
+    const val ADCARD = "adcard"
 }

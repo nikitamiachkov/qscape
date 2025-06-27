@@ -106,6 +106,35 @@ class AdRateScreenViewModel (savedStateHandle: SavedStateHandle) : ViewModel()  
         }
     }
 
+    fun GetName(userId : String?) {
+        viewModelScope.launch {
+            try {
+                val profileResult = supabase.from("profile")
+                    .select(
+                        columns = Columns.list(
+                            "user_id",
+                            "username",
+                            "surname",
+                            "date_of_birth"
+                        )
+                    ) {
+                        filter {
+                            userId?.let { eq("user_id", it) }
+                        }
+                    }
+                    .decodeSingle<Profile>()
+
+
+
+                username = profileResult.username
+
+            } catch (_ex: AuthRestException) {
+                //username = "Noy"
+                Log.d("SignUp", "lox")
+            }
+        }
+    }
+
      fun insertUserData(text : String) {
 
          viewModelScope.launch {

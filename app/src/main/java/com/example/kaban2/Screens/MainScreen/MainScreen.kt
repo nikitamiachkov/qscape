@@ -28,6 +28,7 @@ import com.example.kaban2.Screens.Components.ProjectCard
 import com.example.kaban2.Screens.DarkBottomNavigationBar
 import com.example.kaban2.Screens.NavigationScreen
 import com.example.kaban2.Screens.RateScreen.RateScreen
+import com.example.kaban2.Screens.RateScreen.RateScreen2
 
 data class Project(
     val title: String,
@@ -62,8 +63,7 @@ fun MainScreen(navController: NavHostController) {
 
             }
             composable(BottomNavItem.Rate.route) {
-
-                RateScreen(navController)
+                RateScreen2(navController)
             }
         }
     }

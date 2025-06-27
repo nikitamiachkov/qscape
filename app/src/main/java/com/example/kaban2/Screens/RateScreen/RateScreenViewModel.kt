@@ -35,6 +35,14 @@ class RateScreenViewModel : ViewModel()  {
         loadUserData()
     }
 
+    fun refreshData() {
+        viewModelScope.launch {
+            // Здесь вызываем всю нужную логику обновления
+            // например: загрузка username, balance, cripto, kolvo и т.д.
+            loadUserData()
+            //loadCriptoList()
+        }
+    }
 
     private fun loadUserData() {
 
@@ -78,6 +86,8 @@ class RateScreenViewModel : ViewModel()  {
 
              val chat = Chat(userId, true, text)
              supabase.from("chat").insert(chat)
+             refreshData()
+
 
          }
 

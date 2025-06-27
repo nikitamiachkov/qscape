@@ -1,6 +1,5 @@
-package com.example.kaban2.Screens.Admin.AdRateScreen
+package com.example.kaban2.Screens.RateScreen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -28,45 +27,32 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.kaban2.Domain.models.Chat
-import com.example.kaban2.Screens.Components.AdMessageBubble
 import com.example.kaban2.Screens.Components.MessageBubble
 import com.example.kaban2.Screens.Components.ServiceCard
 import com.example.kaban2.Screens.MainScreen.MainScreenViewModel
-import com.example.kaban2.Screens.RateScreen.RateScreenViewModel
 
-data class Message(val text: String, val isUser: Boolean)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AdRateScreen(userId : String, navController: NavHostController) {
+fun RateScreen2(navController: NavHostController) {
     var messages1 by remember { mutableStateOf(
         listOf(
-            Chat("", true, "Здравствуйте! Чем можем помочь?"),
+            Chat("", false, "Здравствуйте! Чем можем помочь?"),
             //Message("Привет! У меня вопрос по заказу.", true)
         )
     ) }
 
     var messages by remember { mutableStateOf(
         listOf(
-            Chat("", true, null),
+            Chat("", false, null),
             //Message("Привет! У меня вопрос по заказу.", true)
         )
     ) }
 
-    val viewModel: AdRateScreenViewModel = viewModel()
-
-
-    LaunchedEffect(Unit) {
-        viewModel.setUserId(userId)
-    }
-
-    viewModel.GetName(userId)
-    val username = viewModel.username
-
+    val viewModel: RateScreenViewModel = viewModel()
 
     val chat = viewModel.books.observeAsState(emptyList())
     val kolvo = viewModel.kolvo
-    Log.e("", chat.value.toString())
 
     var inputText by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -91,7 +77,7 @@ fun AdRateScreen(userId : String, navController: NavHostController) {
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = username.toString(),
+                            text = "Поддержка",
                             color = Color.White,
                             fontSize = 18.sp
                         )
@@ -111,16 +97,14 @@ fun AdRateScreen(userId : String, navController: NavHostController) {
                 reverseLayout = false
             ) {
                 items(1) { message ->
-                    AdMessageBubble(messages1[0])
+                    MessageBubble(messages1[0])
                 }
                 //MessageBubble(messages[0])
                 items(kolvo) { index ->
-                    chat.value[index].from = !chat.value[index].from
-                    AdMessageBubble(chat.value[index])
-                    Log.e("", chat.value[index].toString())
+                    MessageBubble(chat.value[index])
                 }
                 items(messages) { message ->
-                    if (message.message != null) AdMessageBubble(message)
+                    if (message.message != null) MessageBubble(message)
                 }
             }
 

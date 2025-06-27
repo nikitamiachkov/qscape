@@ -63,14 +63,17 @@ fun AdMainScreen(navController: NavHostController) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(AdBottomNavItem.Main.route) {
-
-                AdProjectsScreen(username, navController)
+                //navController.navigate("admian")
+                //navController.popBackStack()
+                AdProjectsScreen(navController)
             }
             composable(AdBottomNavItem.Buy.route) {
+                //navController.popBackStack()
                 AdBuyScreen(navController)
 
             }
             composable(AdBottomNavItem.Rate.route) {
+                //navController.popBackStack()
                 PreRateScreen(navController)
             }
         }
@@ -78,7 +81,86 @@ fun AdMainScreen(navController: NavHostController) {
 }
 
 @Composable
-fun AdProjectsScreen(username : String?, navController: NavController) {
+fun AdProjectsScreen(navController: NavController) {
+    val projects = listOf(
+        Project("Разработка сайта", 0.75f, "В процессе"),
+        Project("Приложение для заказов", 0.4f, "На согласовании"),
+        Project("CRM для клиента", 1.0f, "Завершён")
+    )
+
+
+
+    val viewModel: AdMainScreenViewModel = viewModel()
+    val books = viewModel.books
+    val serv = viewModel.books2
+    val kolvo = viewModel.kolvo
+    val kolvo2 = viewModel.kolvo2
+    val prof = viewModel.books3
+
+    val username = viewModel.username
+
+    LazyColumn(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxSize()
+    ) {
+        item {
+            // Аватар и имя
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.icon),
+                    contentDescription = "Аватар",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = username.toString(),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text(
+                text = "Активные проекты компании",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        items(kolvo) { index ->
+
+            var profile : Profile?
+            for (i in 0..kolvo2-1) {
+                if (prof.value?.get(i)?.user_id == books.value?.get(index)?.user_id) {
+                    profile = prof.value?.get(i)
+                    AdProjectCard(index, profile,
+                        books.value?.get(index),
+                        books.value?.get(index)?.let { serv.value?.get(it.service_id) },
+                        navController) //books.value?[index].service_id
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+            }
+
+
+
+        }
+    }
+}
+
+@Composable
+fun AdProjectsScreen2(username : String?, navController: NavController) {
     val projects = listOf(
         Project("Разработка сайта", 0.75f, "В процессе"),
         Project("Приложение для заказов", 0.4f, "На согласовании"),
@@ -140,7 +222,7 @@ fun AdProjectsScreen(username : String?, navController: NavController) {
             for (i in 0..kolvo2-1) {
                 if (prof.value?.get(i)?.user_id == books.value?.get(index)?.user_id) {
                     profile = prof.value?.get(i)
-                    AdProjectCard(profile,
+                    AdProjectCard(index, profile,
                         books.value?.get(index),
                         books.value?.get(index)?.let { serv.value?.get(it.service_id) },
                         navController) //books.value?[index].service_id

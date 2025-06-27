@@ -63,6 +63,15 @@ class AdMainScreenViewModel : ViewModel() {
         loadUserData()
     }
 
+    fun refreshData() {
+        viewModelScope.launch {
+            // Здесь вызываем всю нужную логику обновления
+            // например: загрузка username, balance, cripto, kolvo и т.д.
+            loadUserData()
+            //loadCriptoList()
+        }
+    }
+
 
     private fun loadUserData() {
 
@@ -160,8 +169,9 @@ class AdMainScreenViewModel : ViewModel() {
 
             _projects.value = newProgress
 
-            /*navController.popBackStack()
-            navController.navigate("admian")*/
+            //navController.popBackStack()
+            //navController.navigate("admian")
+            //navController.navigate("adcard")
 
         }
     }

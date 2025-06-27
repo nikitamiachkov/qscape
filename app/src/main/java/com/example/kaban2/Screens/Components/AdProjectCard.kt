@@ -33,15 +33,24 @@ import com.example.kaban2.Domain.models.Profile
 import com.example.kaban2.Domain.models.Projects
 import com.example.kaban2.Domain.models.Services
 import com.example.kaban2.Screens.Admin.AdMainScreen.AdMainScreenViewModel
+import com.example.kaban2.Screens.Admin.AdMainScreen.AdProjectsScreen
+import com.example.kaban2.Screens.Admin.AdMainScreen.AdProjectsScreen2
 import com.example.kaban2.Screens.MainScreen.Project
 
 @Composable
-fun AdProjectCard(profile: Profile?, project: Projects?, services: Services?,
+fun AdProjectCard(index: Int, profile: Profile?, project: Projects?, services: Services?,
                   navController: NavController) {
     val viewModel: AdMainScreenViewModel = viewModel()
 
     // Состояние прогресса
     var progress by remember { mutableStateOf(project?.completeness?.toFloat() ?: 0f) }
+
+    val books = viewModel.books
+    var pr by remember { mutableStateOf(books.value?.get(index)?.completeness) }
+
+    var progress2 = progress
+
+    val username = viewModel.username
 
     /*val currentProject = viewModel.projects.collectAsState().value
         .find { it.user_id == project?.user_id && it.service_id == project?.service_id }
@@ -73,7 +82,7 @@ fun AdProjectCard(profile: Profile?, project: Projects?, services: Services?,
 
             // Прогрессбар
             LinearProgressIndicator(
-                progress = progress.coerceIn(0f, 1f),
+                progress = progress.coerceIn(0f, 1f) ?: 0.0f,
                 color = Color(0xFF0b81bc),
                 trackColor = Color.DarkGray,
                 modifier = Modifier
@@ -89,6 +98,7 @@ fun AdProjectCard(profile: Profile?, project: Projects?, services: Services?,
                     onClick = {
                         progress = (progress - 0.1f).coerceAtLeast(0f)
                         viewModel.updateProjectProgress(project?.user_id, project?.service_id, progress, navController)
+                        viewModel.refreshData()
                         /*navController.popBackStack() // Удалить текущий экран
                         navController.navigate("main_screen")*/
 
@@ -96,6 +106,9 @@ fun AdProjectCard(profile: Profile?, project: Projects?, services: Services?,
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF04547A))
                 ) {
                     Text(text = "-10%")
+                    pr = pr?.minus(0.1f)
+                    //AdProjectsScreen(navController)
+                    //AdProjectsScreen2(username, navController)
                 }
 
 
@@ -103,10 +116,13 @@ fun AdProjectCard(profile: Profile?, project: Projects?, services: Services?,
                     onClick = {
                         progress = (progress + 0.1f).coerceAtMost(1f)
                         viewModel.updateProjectProgress(project?.user_id, project?.service_id, progress, navController) // если нужно
+                        viewModel.refreshData()
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF04547A))
                 ) {
                     Text(text = "+10%")
+                    pr = pr?.plus(0.1f)
+                    //AdProjectsScreen2(username, navController)
                 }
             }
 
