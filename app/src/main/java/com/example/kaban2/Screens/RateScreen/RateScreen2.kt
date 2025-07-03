@@ -98,13 +98,16 @@ fun RateScreen2(navController: NavHostController) {
             ) {
                 items(1) { message ->
                     MessageBubble(messages1[0])
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
                 //MessageBubble(messages[0])
                 items(kolvo) { index ->
                     MessageBubble(chat.value[index])
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
                 items(messages) { message ->
                     if (message.message != null) MessageBubble(message)
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
 

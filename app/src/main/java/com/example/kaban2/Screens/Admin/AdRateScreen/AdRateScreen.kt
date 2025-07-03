@@ -112,15 +112,18 @@ fun AdRateScreen(userId : String, navController: NavHostController) {
             ) {
                 items(1) { message ->
                     AdMessageBubble(messages1[0])
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
                 //MessageBubble(messages[0])
                 items(kolvo) { index ->
                     chat.value[index].from = !chat.value[index].from
                     AdMessageBubble(chat.value[index])
                     Log.e("", chat.value[index].toString())
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
                 items(messages) { message ->
                     if (message.message != null) AdMessageBubble(message)
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
 

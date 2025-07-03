@@ -11,8 +11,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.kaban2"
-        minSdk = 24
-        targetSdk = 35
+        minSdk = 21
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
